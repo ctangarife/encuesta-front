@@ -85,6 +85,7 @@ const RegisterForm: React.FC = () => {
       {error && <p className={styles.error}>{error}</p>}
       {success && <p className={styles.success}>¡Registro exitoso!</p>}
       <form>
+      <label htmlFor="name">Nombre</label>
         <input
           type="text"
           name="name"
@@ -94,6 +95,7 @@ const RegisterForm: React.FC = () => {
           onChange={handleChange}
           required
         />
+        <label htmlFor="lastName">Apellido</label>
         <input
           type="text"
           name="lastName"
@@ -103,6 +105,7 @@ const RegisterForm: React.FC = () => {
           onChange={handleChange}
           required
         />
+        <label htmlFor="email">Email (debe ser @umanizales.edu.co)</label>
         <input
           type="email"
           name="email"
@@ -112,6 +115,7 @@ const RegisterForm: React.FC = () => {
           onChange={handleChange}
           required
         />
+        <label htmlFor="typeIdentification">Tipo de Identificación</label>
         <select
           name="typeIdentification"
           className={styles.inputField}
@@ -123,6 +127,7 @@ const RegisterForm: React.FC = () => {
           <option value={TypeIdentification.CE}>CE</option>
           <option value={TypeIdentification.TI}>TI</option>
         </select>
+        <label htmlFor="identification">Identificación</label>
         <input
           type="text"
           name="identification"
@@ -132,6 +137,7 @@ const RegisterForm: React.FC = () => {
           onChange={handleChange}
           required
         />
+        <label htmlFor="birthDate">Fecha de Nacimiento</label>
         <input
           type="date"
           name="birthDate"
@@ -142,6 +148,7 @@ const RegisterForm: React.FC = () => {
           max={getMaxDate()}
           required
         />
+        <label htmlFor="gender">Género</label>
         <select
           name="gender"
           className={styles.inputField}
