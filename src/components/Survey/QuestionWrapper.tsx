@@ -37,7 +37,7 @@ export const QuestionWrapper: React.FC<QuestionWrapperProps> = ({ survey }) => {
         setIsEmailRegistered(exists);
 
         if (!exists) {
-          router.push(`/register`);
+          router.push(`/register?redirect=/survey/${survey.id}`);
         }
       }
     };

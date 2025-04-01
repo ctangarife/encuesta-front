@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import styles from "./RegisterForm.module.sass";
 import {
   validateEmail,
@@ -10,7 +11,13 @@ import {
 } from "../../services/backEncuesta/register";
 import { getClientDeviceInfo } from "app/utils/getClientDeviceInfo";
 
-const RegisterForm: React.FC = () => {
+function RegisterFormContent() {
+  const router = useRouter();
+  const { useSearchParams } = require("next/navigation");
+  const searchParams = useSearchParams();
+
+  const redirectUrl = searchParams.get("redirect");
+
   const [formData, setFormData] = useState({
     name: "",
     lastName: "",
@@ -50,6 +57,13 @@ const RegisterForm: React.FC = () => {
       // Enviar los datos al backend usando el servicio
       await submitRegistration(formData, deviceInfo);
       setSuccess(true);
+      // 🔥 Redirigir a la encuesta original si `surveyId` existe, de lo contrario a `/`
+      if (redirectUrl) {
+        setTimeout(() => {
+          router.push(redirectUrl);
+        }, 1500); // 1.5 segundos para mostrar el mensaje de éxito
+      }
+     
     } catch (error) {
       setError("Hubo un error al registrar, por favor intenta nuevamente.");
     }
@@ -165,6 +179,19 @@ const RegisterForm: React.FC = () => {
         </button>
       </form>
     </div>
+  );
+};
+// Componente de carga fallback simple
+function LoadingFallback() {
+  return <div>Cargando...</div>;
+}
+
+// Componente principal que usa Suspense
+const RegisterForm: React.FC = () => {
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <RegisterFormContent />
+    </Suspense>
   );
 };
 
